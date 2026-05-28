@@ -8,16 +8,6 @@ Welcome to the **Production Agentic Engineering Handbook** repository! This proj
 
 ---
 
-## 🏗️ System Blueprint Overview
-
-A production-grade agent is more than a simple LLM prompt wrapper. It requires a structured system combining dynamic memory layers, deterministic execution graphs, standardized tool access, and sandboxed runtimes:
-
-<p align="center">
-  <img src="assets/architecture.png" alt="Agent Architecture Diagram" width="80%" />
-</p>
-
----
-
 ## 📘 Handbook Chapters
 
 Explore the full, comprehensive implementation guide:
