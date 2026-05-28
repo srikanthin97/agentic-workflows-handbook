@@ -12,6 +12,7 @@ This guide serves as a comprehensive, senior-level handbook detailing the archit
 5. [Multi-Agent Systems & Collaboration Patterns](#5-multi-agent-systems--collaboration-patterns)
 6. [Observability, Telemetry & Evaluations (Evals)](#6-observability-telemetry--evaluations-evals)
 7. [Security, Guardrails, & Sandboxing](#7-security-guardrails--sandboxing)
+8. [Practical Case Study: Simple AI Research Assistant](#8-practical-case-study-simple-ai-research-assistant)
 
 ---
 
@@ -234,3 +235,31 @@ graph TD
 2.  **Isolated Sandboxes:** Execute generated Python scripts or queries in micro-VMs or ephemeral containers (such as Docker or Firecracker) with limited resource allocations and blocked internet connections.
 3.  **Output Leakage Sanitizers:** Scan generated answers for PII (Personally Identifiable Information), API tokens, or raw database connection strings before presenting them to the client.
 4.  **Durable Execution:** Agent runs are long-running and stateful. Traditional serverless runtimes (like AWS Lambda) often timeout. Deploy agent backends using managed container orchestrations (ECS, Kubernetes) paired with workflow state stores (Redis, PostgreSQL).
+
+---
+
+## 8. Practical Case Study: Simple AI Research Assistant
+
+To contextualize these components in a real-world system, let's explore a **Simple AI Research Assistant** designed to search, retrieve, and summarize 2026 scientific research papers on Room-Temperature Superconductors.
+
+### Lifecycle of the Research Assistant Agent
+
+![Simple AI Research Assistant Lifecycle](assets/simple_use_case.png)
+
+### Execution Trace & System Interaction
+
+1.  **User Query Input:**
+    *   *Payload:* `"Find 2026 research papers on room-temperature superconductors."`
+2.  **Input Guardrails (PII & Injection Sanitizer):**
+    *   The prompt passes through a regex and LLM classifier check to ensure it contains no malicious instructions or sensitive credentials. 
+3.  **Agent Core (LLM Decision Engine):**
+    *   The model evaluates the request against the database schema/API definitions. Recognizing the need for external information, it decides to invoke a search tool.
+4.  **Search Tool Execution (MCP Client):**
+    *   The agent calls `WebSearchTool(query="room temperature superconductors 2026", max_results=5)`. The local MCP server runs the request against a scientific search index and returns raw JSON text snippets.
+5.  **Working Memory Store:**
+    *   The returned JSON payload is parsed and the paper titles, authors, and URLs are written to the session's Working Memory.
+6.  **Report Synthesizer (Aggregation Node):**
+    *   The agent reads the saved references from Working Memory, compiles them into a structured Markdown executive review, and validates dates and links.
+7.  **Output Response & Guardrails:**
+    *   The generated Markdown is scanned for any hallucinated links or data leakages, and presented to the user as a clean, finalized report.
+
