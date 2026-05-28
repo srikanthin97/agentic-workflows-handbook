@@ -60,5 +60,4 @@ class WebSearchTool(BaseModel):
 ## 📬 Let's Collaborate
 
 If you are building production agents or optimizing vector retrieval platforms, let's connect!
-*   💼 **LinkedIn:** [linkedin.com/in/srikanthkpk](https://www.linkedin.com/in/srikanthkpk/)
 *   📧 **Email:** [srikanth.ln63@gmail.com](mailto:srikanth.ln63@gmail.com)
