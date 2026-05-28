@@ -4,13 +4,13 @@
 
 # Production Agentic Engineering Handbook 🧠🤖
 
-Welcome to the **Production Agentic Engineering Handbook** repository! This project compiles architectural blueprints, implementation schemas, and operational checklists designed to build, scale, and secure production-grade autonomous agents and multi-agent systems.
+Welcome to the **Production Agentic Engineering Handbook** repository! This project compiles architectural blueprints, design patterns, and operational checklists designed to build, scale, and secure production-grade autonomous AI agents and multi-agent workflows.
 
 ---
 
 ## 🏗️ System Blueprint Overview
 
-A production-grade agent is more than an LLM prompt wrapper. It requires a robust, sandboxed feedback loop combining dynamic memory layers, strict validation guardrails, and deterministic state graphs:
+A production-grade agent is more than a simple LLM prompt wrapper. It requires a structured system combining dynamic memory layers, deterministic execution graphs, standardized tool access, and sandboxed runtimes:
 
 <p align="center">
   <img src="assets/architecture.png" alt="Agent Architecture Diagram" width="80%" />
@@ -24,7 +24,7 @@ Explore the full, comprehensive implementation guide:
 
 ### 🔗 **[Read the Agentic Engineering Handbook ➡️](AGENTIC_ENGINEERING_GUIDE.md)**
 
-Inside, you will find exhaustive analysis and architectural diagrams covering:
+Inside, you will find exhaustive system designs and architectural diagrams covering:
 
 1.  **Core Agent Architecture & Memory Systems:** Working memory, semantic recall (RAG), and context window compression middleware (`TokenLimiter` and `ToolCallFilter`).
 2.  **Tool Calling & Model Context Protocol (MCP):** Host-client integration layers, stdio/SSE protocol specifications, and strict schema validation patterns using Pydantic.
@@ -43,11 +43,15 @@ To build tools that LLMs call reliably, define inputs and operations with strict
 ```python
 from pydantic import BaseModel, Field
 
-class SchemaExtractionTool(BaseModel):
-    """Dynamically extracts DB structures (tables, primary/foreign keys) for prompt context."""
-    db_connection_string: str = Field(
+class WebSearchTool(BaseModel):
+    """Executes a web search query and returns structured snippet results."""
+    query: str = Field(
         ..., 
-        description="SQLAlchemy-compatible PostgreSQL or SQLite connection URI."
+        description="Search term query string to locate target documentation."
+    )
+    max_results: int = Field(
+        5, 
+        description="Maximum number of search results to return."
     )
 ```
 
